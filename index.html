@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalpataru Sahoo — iOS &amp; macOS Developer</title>
+<meta name="description" content="Kalpataru Sahoo, iOS and macOS developer. 11+ years building native Apple apps. Available for full-time roles and freelance iOS projects.">
+<style>
+  :root{
+    --paper: #FAFAF8;
+    --paper-dim: #F1F0EC;
+    --ink: #1C1C1E;
+    --ink-soft: #55554F;
+    --line: #D9D8D2;
+    --swift: #FA7343;
+    --blue: #0A6CFF;
+    --window-bg: #FFFFFF;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{
+    font-family: "SF Mono", "Menlo", "Consolas", monospace;
+  }
+  a{color:inherit;}
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---- nav ---- */
+  header.site{
+    position: sticky;
+    top:0;
+    background: rgba(250,250,248,0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    z-index: 10;
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:14px;
+    padding-bottom:14px;
+  }
+  nav .name{
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:-0.01em;
+  }
+  nav .links{
+    display:flex;
+    gap:20px;
+    font-size:14px;
+  }
+  nav .links a{
+    text-decoration:none;
+    color:var(--ink-soft);
+    border-bottom:1px solid transparent;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  nav .links a:hover{
+    color:var(--ink);
+    border-color:var(--ink);
+  }
+
+  /* ---- mac window chrome ---- */
+  .window{
+    background: var(--window-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    margin: 40px 0;
+    overflow:hidden;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  }
+  .titlebar{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding: 10px 14px;
+    background: var(--paper-dim);
+    border-bottom:1px solid var(--line);
+  }
+  .dots{display:flex; gap:7px;}
+  .dots span{
+    width:11px; height:11px; border-radius:50%;
+    display:inline-block;
+  }
+  .dots .r{background:#FF5F57;}
+  .dots .y{background:#FEBC2E;}
+  .dots .g{background:#28C840;}
+  .titlebar .title{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin: 0 auto 0 0;
+    padding-left:2px;
+  }
+  .window-body{
+    padding: 32px;
+  }
+  @media (max-width:600px){
+    .window-body{ padding: 24px 20px; }
+  }
+
+  /* ---- hero ---- */
+  .hero-window{ margin-top:36px; opacity:0; animation: open .5s ease forwards; animation-delay:.05s; }
+  @keyframes open{
+    from{ opacity:0; transform: scale(.985) translateY(6px); }
+    to{ opacity:1; transform: scale(1) translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-window{ animation:none; opacity:1; }
+  }
+  .hero h1{
+    font-size: 30px;
+    line-height:1.25;
+    margin: 0 0 10px 0;
+    letter-spacing:-0.015em;
+  }
+  .hero h1 .role{ color: var(--ink-soft); font-weight:500; }
+  .hero p.pitch{
+    font-size:16px;
+    color: var(--ink-soft);
+    max-width: 54ch;
+    margin: 0 0 24px 0;
+  }
+  .stats{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+    margin: 22px 0 26px 0;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+  }
+  .stat b{
+    display:block;
+    font-size:20px;
+    font-weight:600;
+  }
+  .stat span{
+    font-size:12.5px;
+    color: var(--ink-soft);
+  }
+  .cta-row{ display:flex; gap:12px; flex-wrap:wrap; }
+  .btn{
+    display:inline-block;
+    padding: 10px 18px;
+    border-radius: 7px;
+    font-size:14px;
+    font-weight:600;
+    text-decoration:none;
+    border: 1px solid var(--ink);
+  }
+  .btn.primary{ background:var(--ink); color:var(--paper); }
+  .btn.primary:hover{ background:#000; }
+  .btn.ghost{ color:var(--ink); }
+  .btn.ghost:hover{ background: var(--paper-dim); }
+
+  /* ---- section headings (code-comment style, tied to dev subject) ---- */
+  h2.section-head{
+    font-size:13px;
+    color: var(--swift);
+    margin: 56px 0 0 0;
+    padding: 0 0 0 0;
+  }
+  h2.section-head .wrap{padding:0;}
+
+  /* ---- skills ---- */
+  .skill-group{ margin-bottom:18px; }
+  .skill-group:last-child{ margin-bottom:0; }
+  .skill-group .label{
+    font-size:12.5px;
+    color: var(--ink-soft);
+    margin-bottom:8px;
+  }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-size:13px;
+    padding: 5px 10px;
+    background: var(--paper-dim);
+    border:1px solid var(--line);
+    border-radius: 6px;
+  }
+
+  /* ---- experience ---- */
+  .job{
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+  }
+  .job:first-child{ border-top:none; padding-top:0; }
+  .job-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:6px;
+  }
+  .job-head .role{ font-weight:600; font-size:16px; }
+  .job-head .when{ font-size:13px; color:var(--ink-soft); }
+  .job-meta{ font-size:13.5px; color:var(--ink-soft); margin-bottom:10px; }
+  .job ul{ margin:0; padding-left:18px; }
+  .job li{ margin-bottom:6px; font-size:14.5px; color:#333; }
+
+  /* ---- projects ---- */
+  .project{
+    padding:22px 0;
+    border-top:1px solid var(--line);
+  }
+  .project:first-child{ border-top:none; padding-top:0; }
+  .project-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .project-head h3{ margin:0; font-size:16.5px; }
+  .project-head .when{ font-size:13px; color:var(--ink-soft); }
+  .project .role{
+    font-size:13px;
+    color: var(--blue);
+    margin: 4px 0 8px 0;
+  }
+  .project p{ margin:0 0 10px 0; font-size:14.5px; color:#333; max-width:60ch; }
+  .project ul{ margin:0; padding-left:18px; }
+  .project li{ font-size:14px; color:#333; margin-bottom:5px; }
+  .project a.repo-link{
+    font-size:13px;
+    text-decoration:underline;
+    text-decoration-color:var(--line);
+    text-underline-offset:3px;
+  }
+
+  /* ---- two-col: education / awards ---- */
+  .two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+  }
+  @media (max-width:600px){
+    .two-col{ grid-template-columns:1fr; }
+  }
+  .two-col h4{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin: 0 0 10px 0;
+  }
+  .two-col .item{ margin-bottom:14px; }
+  .two-col .item .t{ font-weight:600; font-size:14.5px; }
+  .two-col .item .s{ font-size:13.5px; color:var(--ink-soft); }
+
+  /* ---- footer / contact ---- */
+  footer{
+    margin-top:70px;
+    border-top:1px solid var(--line);
+    padding: 40px 0 60px 0;
+  }
+  footer .avail{
+    display:inline-block;
+    font-size:12.5px;
+    color:#1E7B34;
+    background:#EAF6EC;
+    border:1px solid #CFE8D3;
+    padding:4px 10px;
+    border-radius:20px;
+    margin-bottom:16px;
+  }
+  footer h2{ font-size:22px; margin:0 0 8px 0; }
+  footer p{ color:var(--ink-soft); font-size:15px; max-width:48ch; margin:0 0 20px 0;}
+  footer .contact-list{ font-size:14.5px; }
+  footer .contact-list div{ margin-bottom:6px; }
+  footer .copyright{
+    margin-top:36px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="wrap">
+    <div class="name">Kalpataru Sahoo</div>
+    <div class="links">
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero-window window hero">
+    <div class="titlebar">
+      <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+      <div class="title mono">kalpataru — About.swift</div>
+    </div>
+    <div class="window-body">
+      <h1>Kalpataru Sahoo<br><span class="role">iOS &amp; macOS Developer</span></h1>
+      <p class="pitch">I build native Apple apps end to end — from SwiftUI interfaces down to the backend integrations that power them. Based in Bhubaneswar, India, working with teams and clients remotely.</p>
+      <div class="stats">
+        <div class="stat"><b>11+ yrs</b><span>iOS development</span></div>
+        <div class="stat"><b>15+</b><span>apps shipped to the App Store</span></div>
+        <div class="stat"><b>iOS · macOS</b><span>native, plus Flutter &amp; Android</span></div>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="#work">View projects</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+        <a class="btn ghost" href="resume.pdf" download>Download résumé</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <h2 class="section-head mono">// skills</h2>
+  <section class="window">
+    <div class="titlebar">
+      <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+      <div class="title mono">Skills.swift</div>
+    </div>
+    <div class="window-body">
+      <div class="skill-group">
+        <div class="label">Languages</div>
+        <div class="chips">
+          <span class="chip">Swift</span><span class="chip">Objective-C</span><span class="chip">Kotlin</span><span class="chip">Dart</span><span class="chip">C</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">iOS &amp; macOS</div>
+        <div class="chips">
+          <span class="chip">SwiftUI</span><span class="chip">UIKit</span><span class="chip">Combine</span><span class="chip">RxSwift</span>
+          <span class="chip">Core Data</span><span class="chip">GCD / Multithreading</span><span class="chip">AVFoundation</span>
+          <span class="chip">HealthKit</span><span class="chip">ARKit</span><span class="chip">In-App Purchase</span><span class="chip">Auto Layout</span>
+          <span class="chip">Unit &amp; UI Testing</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Architecture</div>
+        <div class="chips">
+          <span class="chip">Clean Architecture</span><span class="chip">VIPER</span><span class="chip">MVVM</span><span class="chip">MVC</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Backend &amp; integration</div>
+        <div class="chips">
+          <span class="chip">Firebase</span><span class="chip">AWS</span><span class="chip">REST API</span><span class="chip">SOAP API</span>
+          <span class="chip">Google Maps API</span><span class="chip">Branch.io</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Tooling</div>
+        <div class="chips">
+          <span class="chip">Xcode</span><span class="chip">Git / SVN / Bitbucket</span><span class="chip">Jira</span><span class="chip">Trello</span>
+          <span class="chip">TestFlight &amp; App Store distribution</span><span class="chip">Android Studio</span><span class="chip">Flutter</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <h2 class="section-head mono" id="work">// selected work</h2>
+  <section class="window">
+    <div class="titlebar">
+      <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+      <div class="title mono">Projects/</div>
+    </div>
+    <div class="window-body">
+
+      <div class="project">
+        <div class="project-head">
+          <h3>TopsOrtho</h3>
+          <div class="when">Dec 2022 — Present</div>
+        </div>
+        <div class="role">Lead &amp; Developer · macOS</div>
+        <p>Practice-management software for orthodontists — a native macOS app that runs doctors, staff, patients, appointments, and claims for a busy practice.</p>
+        <ul>
+          <li>Led the team and owned client requirements end to end</li>
+          <li>Wrote PostgreSQL functions and handled the data layer</li>
+          <li>Built the UI in Objective-C</li>
+          <li>Integrated third-party services including Doctible, Stax, and DXC</li>
+        </ul>
+        <a class="repo-link" href="#" target="_blank" rel="noopener">View project ↗</a>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <h3>Raindrop</h3>
+          <div class="when">May 2022 — Dec 2022</div>
+        </div>
+        <div class="role">Lead &amp; Developer · iOS</div>
+        <p>A social platform where users post photos, video, and text to communities or their own timeline, with chat, following, and community creation.</p>
+        <ul>
+          <li>Integrated the Amity SDK and customized it to the client's needs</li>
+          <li>Built the authentication system with a focus on security</li>
+          <li>Delivered the full app on a short client timeline</li>
+          <li>Added Firebase push notifications and stood up test/production environments</li>
+        </ul>
+        <a class="repo-link" href="#" target="_blank" rel="noopener">View project ↗</a>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <h3>BoostFinance</h3>
+          <div class="when">Jan 2022 — May 2022</div>
+        </div>
+        <div class="role">Lead &amp; Developer · iOS</div>
+        <p>A finance app for tracking balances and getting ahead of upcoming payments, with dashboard views and web handoff for completing payments.</p>
+        <ul>
+          <li>Built the app from scratch, including the core architecture</li>
+          <li>Designed the UI to support every iOS device, including iPad</li>
+          <li>Wrote the REST API integration layer</li>
+          <li>Added Firebase push notifications and a full testing pipeline</li>
+        </ul>
+        <a class="repo-link" href="#" target="_blank" rel="noopener">View project ↗</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <h2 class="section-head mono" id="experience">// experience</h2>
+  <section class="window">
+    <div class="titlebar">
+      <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+      <div class="title mono">Experience.log</div>
+    </div>
+    <div class="window-body">
+
+      <div class="job">
+        <div class="job-head">
+          <div class="role">Technical Lead</div>
+          <div class="when">Present</div>
+        </div>
+        <div class="job-meta">Telliant Systems · Chennai, India (Remote)</div>
+        <ul>
+          <li>Lead a project team of 6, supervising programmers, designers, and technicians against delivery targets</li>
+          <li>Mentor junior developers on OOP principles and data structures</li>
+          <li>Work across iOS and Android, supporting other teams on iOS-specific problems</li>
+          <li>Partner with product managers to turn requirements into technical solutions</li>
+          <li>Implement security measures to protect sensitive data</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div class="role">App Developer</div>
+          <div class="when"></div>
+        </div>
+        <div class="job-meta">Growvy Technology Pvt Ltd · Cuttack, India</div>
+        <ul>
+          <li>Built iOS apps for yoga and music, focused on engagement and connectivity</li>
+          <li>Integrated a serverless backend on AWS</li>
+          <li>Applied scalable design patterns to improve UX and interface quality</li>
+          <li>Owned testing and debugging for clean app launches and updates</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div class="role">iOS Developer</div>
+          <div class="when"></div>
+        </div>
+        <div class="job-meta">Andolasoft Pvt Ltd · Bhubaneswar, India</div>
+        <ul>
+          <li>Built multiple iOS apps and led a team of 5, including work on a Flutter app</li>
+          <li>Created reusable code modules that cut development time on later projects</li>
+          <li>Cut crash rates through code optimization and rigorous debugging</li>
+          <li>Shipped native Swift apps with Firebase integration on tight deadlines</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div class="role">Software Engineer</div>
+          <div class="when"></div>
+        </div>
+        <div class="job-meta">GGK Tech · Hyderabad, India</div>
+        <ul>
+          <li>Designed solutions with the dev and QA team to meet client scalability and performance needs</li>
+          <li>Trained in .NET and delivered a sample project</li>
+          <li>Worked directly with clients to define solution requirements</li>
+          <li>Modernized legacy codebases to current development standards</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION / AWARDS -->
+  <h2 class="section-head mono">// education &amp; awards</h2>
+  <section class="window">
+    <div class="titlebar">
+      <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+      <div class="title mono">About.md</div>
+    </div>
+    <div class="window-body">
+      <div class="two-col">
+        <div>
+          <h4>Education</h4>
+          <div class="item">
+            <div class="t">B.Tech, Computer Science</div>
+            <div class="s">Veer Surendra Sai University of Technology, Burla · GPA 7.66 · Jun 2015</div>
+          </div>
+        </div>
+        <div>
+          <h4>Awards</h4>
+          <div class="item">
+            <div class="t">Accepting the Challenge of Excellence Award</div>
+            <div class="s">Telliant Systems · Mar 2024</div>
+          </div>
+          <div class="item">
+            <div class="t">Star of the Quarter</div>
+            <div class="s">Telliant Systems · Jun 2022</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <span class="avail">Open to full-time roles &amp; freelance iOS projects</span>
+    <h2>Let's build something.</h2>
+    <p>Whether it's a full-time iOS role or a freelance app to ship, I'm happy to talk through what you need.</p>
+    <div class="contact-list">
+      <div>Email — <a href="mailto:kalpacse96@gmail.com">kalpacse96@gmail.com</a></div>
+      <div>Phone — <a href="tel:+919658399655">+91 96583 99655</a></div>
+      <div>Location — Bhubaneswar, Odisha, India (open to remote &amp; relocation)</div>
+      <div>GitHub — <a href="https://github.com/kalpacse96" target="_blank" rel="noopener">github.com/kalpacse96</a></div>
+      <div>LinkedIn — <a href="https://www.linkedin.com/in/kalpataru-sahoo-%EF%A3%BF-72382b7a/" target="_blank" rel="noopener">https://www.linkedin.com/in/kalpataru-sahoo-%EF%A3%BF-72382b7a/</a></div>
+    </div>
+    <div class="copyright mono">© <span id="year"></span> Kalpataru Sahoo</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
